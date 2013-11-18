@@ -3,6 +3,10 @@
 
     <string name="app_name">Knocked</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-
+    
+    <string name="button1">Turn On</string>
+    <string name="button2">Change Password</string>
+    
+    <string name="promptText">Enter new password</string>
+    <string name="sth">View Pwd</string>
 </resources>
