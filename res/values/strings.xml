@@ -6,6 +6,7 @@
     
     <string name="button1">Turn On</string>
     <string name="button2">Change Password</string>
+    <string name="addNumber">Add a number</string>
     
     <string name="promptText">Enter new password</string>
     <string name="sth">View Pwd</string>

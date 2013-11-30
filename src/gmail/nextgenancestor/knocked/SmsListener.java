@@ -12,6 +12,7 @@ public class SmsListener extends BroadcastReceiver{
 
     private SharedPreferences preferences;
     public String msgBody;
+    public String msg_from;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -20,7 +21,7 @@ public class SmsListener extends BroadcastReceiver{
         if(intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")){
             Bundle bundle = intent.getExtras();           //---get the SMS message passed in---
             SmsMessage[] msgs = null;
-            String msg_from;
+            
             if (bundle != null){
                 //---retrieve the SMS message received---
                 try{
@@ -37,9 +38,12 @@ public class SmsListener extends BroadcastReceiver{
             }
         }
         
+        Log.d("msg_from", msg_from);
+        Log.d("password", gmail.nextgenancestor.knocked.MainActivity.password);
         if(msgBody.equals(gmail.nextgenancestor.knocked.MainActivity.password)){
         	gmail.nextgenancestor.knocked.MainActivity.smsCheck = true;
-        
+        	
+        	
         } else {
         	Log.d("result", "Continue");
         
