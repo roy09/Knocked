@@ -9,14 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     android:background="#000000" >
-    
-    <EditText
-        android:id="@+id/cpwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/sth"
-        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/btnTurnOn"

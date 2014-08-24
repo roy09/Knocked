@@ -22,31 +22,44 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	Button button;
-	static boolean status = false;
 	static boolean smsCheck = false;
 	static String password = "EMERGENCY";
 
 	ArrayList whitelist;
+
+	TextView btn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		btn = (TextView) findViewById(R.id.btnTurnOn);
+		if (gmail.nextgenancestor.knocked.SmsListener.status) {
+			btn.setText("Turn Off");
+		}
+
 		SharedPreferences prefs = this.getSharedPreferences(
 				"gmail.nextgenancestor.knocked", Context.MODE_PRIVATE);
 		password = prefs.getString("password", password);
-
-		EditText sth = (EditText) findViewById(R.id.cpwd);
-		sth.setText(password);
 	}
 
 	public void turnOn(View view) {
-		status = !status;
+		gmail.nextgenancestor.knocked.SmsListener.status = !gmail.nextgenancestor.knocked.SmsListener.status;
+		
+		SharedPreferences prefs = this.getSharedPreferences(
+				"gmail.nextgenancestor.knocked", Context.MODE_PRIVATE);
+		Editor editor = prefs.edit();
 
-		TextView btn = (TextView) findViewById(R.id.btnTurnOn);
+		if (gmail.nextgenancestor.knocked.SmsListener.status) {
+			editor.putString("status", "true");
+		} else {
+			editor.putString("status", "false");
+		}
+		editor.commit();
 
-		if (status) {
+		
+		if (gmail.nextgenancestor.knocked.SmsListener.status) {
 			btn.setText("Turn Off");
 			// use this to start and trigger a service
 			Intent i = new Intent(this, LocalService.class);
@@ -55,7 +68,6 @@ public class MainActivity extends Activity {
 			btn.setText("Turn On");
 		}
 	}
-
 
 	public void changePassword(View view) {
 
@@ -72,8 +84,6 @@ public class MainActivity extends Activity {
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						password = userInput.getText().toString();
-						EditText sth = (EditText) findViewById(R.id.cpwd);
-						sth.setText(password);
 						// I could try hashing
 					}
 				})
@@ -119,6 +129,13 @@ public class MainActivity extends Activity {
 				"gmail.nextgenancestor.knocked", Context.MODE_PRIVATE);
 		Editor editor = prefs.edit();
 		editor.putString("password", password);
+
+		if (btn.getText().toString().equals("Turn Off")) {
+			editor.putString("status", "true");
+		} else {
+			editor.putString("status", "false");
+		}
+
 		editor.commit();
 
 		Log.d("password", password);
@@ -129,31 +146,31 @@ public class MainActivity extends Activity {
 	}
 }
 
-//Whitlisting
-//public void addNumber(View view) {
-//LayoutInflater li = LayoutInflater.from(this);
-//View promptsView = li.inflate(R.layout.prompt, null);
+// Whitlisting
+// public void addNumber(View view) {
+// LayoutInflater li = LayoutInflater.from(this);
+// View promptsView = li.inflate(R.layout.prompt, null);
 //
-//AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-//alertDialogBuilder.setView(promptsView);
+// AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+// alertDialogBuilder.setView(promptsView);
 //
-//final EditText userInput = (EditText) promptsView
-//		.findViewById(R.id.editTextDialogUserInput);
-//alertDialogBuilder
-//		.setCancelable(false)
-//		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//			public void onClick(DialogInterface dialog, int id) {
+// final EditText userInput = (EditText) promptsView
+// .findViewById(R.id.editTextDialogUserInput);
+// alertDialogBuilder
+// .setCancelable(false)
+// .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+// public void onClick(DialogInterface dialog, int id) {
 //
-//			}
-//		})
-//		.setNegativeButton("Cancel",
-//				new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog, int id) {
-//						dialog.cancel();
+// }
+// })
+// .setNegativeButton("Cancel",
+// new DialogInterface.OnClickListener() {
+// public void onClick(DialogInterface dialog, int id) {
+// dialog.cancel();
 //
-//					}
-//				});
+// }
+// });
 //
-//AlertDialog alertDialog = alertDialogBuilder.create();
-//alertDialog.show();
-//}
+// AlertDialog alertDialog = alertDialogBuilder.create();
+// alertDialog.show();
+// }
